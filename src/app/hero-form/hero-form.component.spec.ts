@@ -13,6 +13,8 @@ describe('HeroFormComponent', () => {
     .compileComponents();
   }));
 
+  console.log('');
+
   beforeEach(() => {
     fixture = TestBed.createComponent(HeroFormComponent);
     component = fixture.componentInstance;
