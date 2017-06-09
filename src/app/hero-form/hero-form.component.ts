@@ -11,7 +11,4 @@ export class HeroFormComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  gitFix = function() {};
-
 }
