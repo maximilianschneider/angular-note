@@ -15,10 +15,11 @@
 		<article>
 		  {{not.Content}}
 		</article>
+      <button class="btn btn-default" (click)="editNote(not._ID);">edit</button>
 	  </div>
   </section>
   <section id="content2">
-    <form #heroForm="ngForm">
+    <form #noteForm="ngForm">
       <div class="form-group">
         <label for="titel">Titel</label>
         <input type="text" class="form-control" id="titel" required [(ngModel)]="model.Title" name="titel" #name="ngModel">
@@ -42,7 +43,9 @@
         <div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Name is required </div>
       </div>
       <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
-      <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
+      <button type="button" class="btn btn-default" (click)="newNote(); noteForm.reset()">New Note</button>
     </form>
   </section>
 </main>
+
+<!-- TODO: add edit button -->

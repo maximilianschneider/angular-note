@@ -15,3 +15,6 @@ import { HeroFormComponent } from './hero-form.component';
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
+
+// TODO: install ng2-ckeditor
+

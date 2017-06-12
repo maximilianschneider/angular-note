@@ -12,6 +12,7 @@ export class HeroFormComponent {
   Notes = [];
   Subjects = [];
   Categorys = [];
+  editmode = false;
 
   model = new Note(0, 'Titel', 'Notiz...', 0, 'math', 0, 'Benutzername...', 0, 'homework', '06.04.2016', '09.04.2016');
 
@@ -35,39 +36,38 @@ export class HeroFormComponent {
   };
 
   onSubmit() {
-    if (this.model.Enddate === '') {
-      this.model.Enddate = 'Keins';
+    if (this.editmode === true) {
+      this.Notes[this.GetIndexOfObjectByID(this.Notes, this.model.ID)] = new Note(this.model.ID, this.model.Title, this.model.Content, this.model.SubjectID, this.model.SubjectName, this.model.UserID, this.model.UserName, this.model.CategoryID, this.model.CategoryName, this.model.DateCreated, this.model.Enddate);
+      this.editmode = false;
+    } else {
+      if (this.model.Enddate === '') {
+        this.model.Enddate = 'Keins';
+      }
+      // this.Notes.push(new Note(0, this.Title, this.Note, 0, 0, this.Category, '2017-05-16', this.Enddate));
+      this.Notes.push(new Note(0, this.model.Title, this.model.Content, this.findMyObjectIDByName(this.Subjects, this.model.SubjectName), this.model.SubjectName , 0, 'admin', this.findMyObjectIDByName(this.Categorys, this.model.CategoryName), this.model.CategoryName, '2017-05-18', this.model.Enddate));
+      this.model.Content = '';
+      this.model.Title = '';
+      this.model.CategoryID = 0;
+      this.model.Enddate = '';
+      this.model.SubjectID = 0;
     }
-    // this.Notes.push(new Note(0, this.Title, this.Note, 0, 0, this.Category, '2017-05-16', this.Enddate));
-    this.Notes.push(new Note(0, this.model.Title, this.model.Content, this.findMyObjectIDByName(this.Subjects, this.model.SubjectName), this.model.SubjectName , 0, 'admin', this.findMyObjectIDByName(this.Categorys, this.model.CategoryName), this.model.CategoryName, '2017-05-18', this.model.Enddate));
-    this.model.Content = '';
-    this.model.Title = '';
-    this.model.CategoryID = 0;
-    this.model.Enddate = '';
-    this.model.SubjectID = 0;
   }
 
-  /*
-  * findMyObjectByID = function (objArray, id) {
+  findMyObjectByID = function (objArray, id) {
    for (const obj of objArray){
-   if (+obj._ID === +id) {
-   console.log('--------------------');
-   console.log(obj._ID + ' | ' + id );
-   console.log(obj._Name);
-   console.log('--------------------');
-   return obj._Name;
-   } else {
-   console.log('--------------------');
-   console.log(obj._ID + ' | ' + id );
-   console.log('ELSE');
-   console.log('--------------------');
-   }
+     if (+obj._ID === +id) {
+       return obj;
+     }
    }
    return 'Keins';
    };
-  * */
 
-  findMyObjectIDByName = function (objArray, name) {
+  GetIndexOfObjectByID(box, objectId) {
+    const index = box.map(function(e) { return e._id; }).indexOf(objectId);
+    return index;
+  }
+
+  findMyObjectIDByName (objArray, name) {
     for (const obj of objArray){
       if (+obj._Name === +name) {
         console.log('--------------------');
@@ -75,19 +75,21 @@ export class HeroFormComponent {
         console.log(obj._ID);
         console.log('--------------------');
         return obj._ID;
-      } else {
-        console.log('--------------------');
-        console.log(obj._Name + ' | ' + name );
-        console.log(obj._ID);
-        console.log('ELSE');
-        console.log('--------------------');
       }
     }
     return 'Keins';
   };
 
-  newHero() { this.model = new Note(0, 'Titel', 'Notiz...', 0, 'math', 0, 'Benutzername...', 0, 'homework', '06.04.2016', '09.04.2016'); }
+  editNote(id) {
+    this.model = this.findMyObjectByID(this.Notes, id);
+    this.editmode = true;
+  }
+
+  newNote() { this.model = new Note(0, 'Titel', 'Notiz...', 0, 'math', 0, 'Benutzername...', 0, 'homework', '06.04.2016', '09.04.2016'); }
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.Notes); }
+  get diagnostic() { return JSON.stringify(this.editmode); }
 }
+
+// TODO: add edit functionalty
+// TODO: autocount id
