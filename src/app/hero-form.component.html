@@ -1,58 +1,48 @@
+{{diagnostic}}
+<main>
+  <input id="tab1" type="radio" name="tabs" checked>
+  <label for="tab1" class="tabswitch">Notes</label>
 
-<div class="widget-note">
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#note" role="tab">Notizen</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#new" role="tab">Neu</a>
-    </li>
-  </ul>
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div class="tab-pane active" id="note" role="tabpanel">
-      {{model.name}}...{{model.power}}
-    </div>
-    <div class="tab-pane" id="new" role="tabpanel">
-      <div class="container">
-        <h1>Hero Form</h1>
-        <form #heroForm="ngForm">
-          {{diagnostic}}
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel"> TODO: remove this: {{model.name}}
-            <div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Name is required </div>
-          </div>
-          <div class="form-group">
-            <label for="alterEgo">Alter Ego</label>
-            <input type="text" class="form-control" id="alterEgo" [(ngModel)]="model.alterEgo" name="alterEgo"> TODO: remove this: {{model.alterEgo}}
-          </div>
-          <div class="form-group">
-            <label for="power">Hero Power</label>
-            <select class="form-control" id="power" required [(ngModel)]="model.power" name="power">
-              <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
-            </select> TODO: remove this: {{model.power}}
-          </div>
-          <button type="submit" class="btn btn-success">Submit</button>
-          <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
-        </form>
+  <input id="tab2" type="radio" name="tabs">
+  <label for="tab2" class="tabswitch">Edit</label>
+
+  <section id="content1" *ngFor="let not of Notes">
+	  <div>
+		<h2>{{not.Title}}</h2>
+		<span>{{not.DateCreated}} | {{not.UserName}}</span><br>
+		<span>Fach: {{not.SubjectName}} | Ablaufdatum: {{not.Enddate}}</span>
+		<hr>
+		<article>
+		  {{not.Content}}
+		</article>
+	  </div>
+  </section>
+  <section id="content2">
+    <form #heroForm="ngForm">
+      <div class="form-group">
+        <label for="titel">Titel</label>
+        <input type="text" class="form-control" id="titel" required [(ngModel)]="model.Title" name="titel" #name="ngModel">
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Name is required </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<script type="javascript">
-  $('#note a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
-  $('#new a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    e.target // newly activated tab
-    e.relatedTarget // previous active tab
-  })
-</script>
+      <div class="form-group">
+        <label for="category">Notizart</label>
+        <select class="form-control" id="category" required [(ngModel)]="model.CategoryName" name="category" #name="ngModel">
+          <option *ngFor="let cat of Categorys" [value]="cat._Name">{{cat._Name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="subjects">Fach</label>
+        <select class="form-control" id="subjects" required [(ngModel)]="model.SubjectName" name="subject" #name="ngModel">
+          <option *ngFor="let sub of Subjects" [value]="sub._Name">{{sub._Name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="enddate">Enddate</label>
+        <input type="text" class="form-control" id="enddate" [(ngModel)]="model.Enddate" name="enddate" #name="ngModel">
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Name is required </div>
+      </div>
+      <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
+    </form>
+  </section>
+</main>
