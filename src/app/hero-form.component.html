@@ -1,27 +1,25 @@
-{{diagnostic}}
 <main>
   <input id="tab1" type="radio" name="tabs" checked>
-  <label for="tab1" class="tabswitch">Notes</label>
+  <label for="tab1" class="tabswitch">Notizen</label>
 
   <input id="tab2" type="radio" name="tabs">
-  <label for="tab2" class="tabswitch">Edit</label>
+  <label for="tab2" class="tabswitch">Bearbeiten</label>
 
   <section id="content1" *ngFor="let not of Notes">
 	  <div>
-		<h2>{{not.Title}}</h2>
-		<span>{{not.DateCreated}} | {{not.UserName}}</span><br>
-		<span>Fach: {{not.SubjectName}} | Ablaufdatum: {{not.Enddate}}</span>
-		<hr>
-		<article>
-		  {{not.Content}}
-		</article>
-      <button class="btn btn-default" (click)="editNote(not._ID);">edit</button>
-
+      <h2>{{not.Title}}</h2>
+      <span>{{not.DateCreated}} | {{not.UserName}}</span><br>
+      <span>Fach: {{not.SubjectName}} | Ablaufdatum: {{not.Enddate}}</span>
+      <hr>
+      <article>
+        {{not.Content}}
+      </article>
+      <button class="btn btn-default" (click)="editNote(not._ID);">ändern</button>
+      <button class="btn btn-default" (click)="deleteNote(not._ID)">löschen</button>
 	  </div>
   </section>
   <section id="content2">
     <form #noteForm="ngForm">
-      {{this.idCounter}}
       <div class="form-group">
         <label for="titel">Titel</label>
         <input type="text" class="form-control" id="titel" required [(ngModel)]="model.Title" name="titel" #name="ngModel">
@@ -42,9 +40,21 @@
       <div class="form-group">
         <label for="enddate">Enddate</label>
         <input type="text" class="form-control" id="enddate" [(ngModel)]="model.Enddate" name="enddate" #name="ngModel">
-        <div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Name is required </div>
       </div>
-      <button type="submit" class="btn btn-success" (click)="onSubmit(); noteForm.reset()">Submit</button>
+      <div class="form-group">
+        <!--
+        <ckeditor
+          [(ngModel)]="model.Content"
+          [config]="{uiColor: '#99000'}"
+          (change)="onChange($event)"
+          (ready)="onReady($event)"
+          (focus)="onFocus($event)"
+          (blur)="onBlur($event)"
+          debounce="500">
+        </ckeditor>
+        -->
+      </div>
+      <button type="submit" class="btn btn-success" (click)="onSubmit(); noteForm.reset()" [disabled]="!noteForm.form.valid">{{Submitbutton}}</button>
       <!-- <button type="button" class="btn btn-default" (click)="newNote(); noteForm.reset()">New Note</button> -->
     </form>
   </section>
