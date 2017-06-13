@@ -14,7 +14,13 @@ html, body {
 body {
   font: 14px/1 'Open Sans', sans-serif;
   color: #555;
-  background: #eee;
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: #FF512F;
+  background: -webkit-linear-gradient(to right, #F09819, #FF512F);
+  background: linear-gradient(to right, #F09819, #FF512F);
 }
 
 h1 {
