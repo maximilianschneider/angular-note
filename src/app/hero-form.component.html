@@ -16,10 +16,12 @@
 		  {{not.Content}}
 		</article>
       <button class="btn btn-default" (click)="editNote(not._ID);">edit</button>
+
 	  </div>
   </section>
   <section id="content2">
     <form #noteForm="ngForm">
+      {{this.idCounter}}
       <div class="form-group">
         <label for="titel">Titel</label>
         <input type="text" class="form-control" id="titel" required [(ngModel)]="model.Title" name="titel" #name="ngModel">
@@ -42,8 +44,8 @@
         <input type="text" class="form-control" id="enddate" [(ngModel)]="model.Enddate" name="enddate" #name="ngModel">
         <div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Name is required </div>
       </div>
-      <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
-      <button type="button" class="btn btn-default" (click)="newNote(); noteForm.reset()">New Note</button>
+      <button type="submit" class="btn btn-success" (click)="onSubmit(); noteForm.reset()">Submit</button>
+      <!-- <button type="button" class="btn btn-default" (click)="newNote(); noteForm.reset()">New Note</button> -->
     </form>
   </section>
 </main>
