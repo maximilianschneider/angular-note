@@ -40,14 +40,14 @@ export class HeroFormComponent {
     if (this.editmode === true) {
       this.Notes[this.GetIndexOfObjectByID(this.Notes, this.model.ID)] = new Note(this.model.ID, this.model.Title, this.model.Content, this.model.SubjectID, this.model.SubjectName, this.model.UserID, this.model.UserName, this.model.CategoryID, this.model.CategoryName, this.model.DateCreated, this.model.Enddate);
       this.editmode = false;
-      // this.model = new Note(0, 'Titel', 'Notiz...', 89, 'math', 1, 'Benutzername...', 1, 'homework', '06.04.2016', '09.04.2016');
+      this.model = new Note(0, 'Titel', 'Notiz...', 89, 'math', 1, 'Benutzername...', 1, 'homework', '06.04.2016', '09.04.2016');
     } else {
       this.idCounter++;
       if (this.model.Enddate === '') {
         this.model.Enddate = 'Keins';
       }
       this.Notes.push(new Note(this.idCounter, this.model.Title, this.model.Content, this.findMyObjectIDByName(this.Subjects, this.model.SubjectName), this.model.SubjectName , 0, 'admin', this.findMyObjectIDByName(this.Categorys, this.model.CategoryName), this.model.CategoryName, '2017-05-18', this.model.Enddate));
-      // this.model = new Note(0, 'Titel', 'Notiz...', 89, 'math', 1, 'Benutzername...', 1, 'homework', '06.04.2016', '09.04.2016');
+      this.model = new Note(0, 'Titel', 'Notiz...', 89, 'math', 1, 'Benutzername...', 1, 'homework', '06.04.2016', '09.04.2016');
     }
   };
 
